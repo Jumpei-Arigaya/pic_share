@@ -12,9 +12,11 @@ const login = () => {
 
     return (
         <div className="py-6 sm:py-8 lg:py-12">
-            <SwipeableTextMobileStepper />
             <div className="bg-white max-w-lg border rounded-lg mx-auto">
-                <h1 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mt-4 mb-4 md:mb-8">PIC SHARE</h1>
+                <div className="flex justify-center">
+                    <SwipeableTextMobileStepper />
+                </div>
+                <h1 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mt-10 mb-4 md:mb-8">PIC SHARE</h1>
                 <div className="flex justify-center">
                     <BasicTextFields value={email} onChange={setEmail}>メールアドレス</BasicTextFields>
                 </div>

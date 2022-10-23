@@ -60,12 +60,11 @@ function SwipeableTextMobileStepper() {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    height: 50,
-                    pl: 2,
+                    height: '20px',
+                    pl: 1,
                     bgcolor: 'background.default',
                 }}
             >
-                <Typography>{images[activeStep].label}</Typography>
             </Paper>
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -92,35 +91,7 @@ function SwipeableTextMobileStepper() {
                     </div>
                 ))}
             </AutoPlaySwipeableViews>
-            <MobileStepper
-                steps={maxSteps}
-                position="static"
-                activeStep={activeStep}
-                nextButton={
-                    <Button
-                        size="small"
-                        onClick={handleNext}
-                        disabled={activeStep === maxSteps - 1}
-                    >
-                        Next
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowLeft />
-                        ) : (
-                            <KeyboardArrowRight />
-                        )}
-                    </Button>
-                }
-                backButton={
-                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowRight />
-                        ) : (
-                            <KeyboardArrowLeft />
-                        )}
-                        Back
-                    </Button>
-                }
-            />
+
         </Box>
     );
 }
