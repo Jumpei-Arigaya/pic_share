@@ -1,13 +1,15 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+type Props = {
+    children: React.ReactNode;
+    link?: string;
+}
 
-export default function BasicButtons() {
+export default function BasicButtons({ children, link }: Props) {
     return (
         <Stack spacing={2} direction="row">
-            <Button variant="text">Text</Button>
-            <Button variant="contained">Contained</Button>
-            <Button variant="outlined">Outlined</Button>
+            <Button variant="contained" value="text" href={link}>{children}</Button>
         </Stack>
     );
 }
