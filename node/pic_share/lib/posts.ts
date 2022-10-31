@@ -12,13 +12,11 @@ type Posts = {
 
 export const useGetPosts = () => {
     const SERVERURL: string = "http://0.0.0.0:8000/";
-    // const res = await fetch(`${SERVERURL}api/posts/`);
-    // const posts = await res.json();
-    // return posts;
-
     const [posts, setPosts] = useState(<Array<Posts>>[]);
-
-    const getAllPostsData = useCallback(() => {
+    const getAllPostsData = useCallback(async () => {
+        // const res = await fetch(`${SERVERURL}api/posts/`);
+        // const posts = await res.json();
+        // return posts;
 
         axios.get<Array<Posts>>("http://localhost:8000/api/posts/")
             .then(res => {
