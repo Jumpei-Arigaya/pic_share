@@ -17,6 +17,9 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
+    volumes:
+      - data-volume:/var/lib/mysql
+
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
@@ -37,3 +40,6 @@ services:
     command: sh -c "cd pic_share && npm run dev"
     ports:
       - "3000:3000"
+
+volumes:
+  data-volume:
