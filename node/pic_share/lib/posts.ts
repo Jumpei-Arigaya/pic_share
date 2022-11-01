@@ -8,6 +8,7 @@ type Posts = {
     id?: number;
     users_id?: number;
     content?: string;
+    title?: string;
 }
 
 export const useGetPosts = () => {
@@ -18,7 +19,7 @@ export const useGetPosts = () => {
         // const posts = await res.json();
         // return posts;
 
-        axios.get<Array<Posts>>("http://localhost:8000/api/posts/")
+        axios.get<Array<Posts>>("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 setPosts(res.data);
             })
