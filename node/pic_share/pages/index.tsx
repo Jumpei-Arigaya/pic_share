@@ -1,16 +1,9 @@
 import { GetServerSideProps, NextPage } from 'next'
-import Link from 'next/link'
-import BasicButtons from '../components/atoms/BasicButtons'
-import styles from '../styles/Home.module.css'
-import internal from 'stream'
-import { useGetPosts } from '../lib/posts'
+import { useGetPosts } from '../hooks/useGetPosts'
 import { useCallback, useEffect } from 'react'
-
-type Posts = {
-  id?: number;
-  users_id?: number;
-  content?: string;
-}
+import SideMenu from '../components/organisms/SideMenu'
+import PostList from '../components/organisms/PostList'
+import SideProfile from '../components/organisms/SideProfile'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
@@ -20,17 +13,20 @@ const Home: NextPage = () => {
   console.log(posts)
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">
-        PIC SHARE
-      </h1>
-      <BasicButtons link={"/accounts/login"}>ログイン画面</BasicButtons>
-      {posts.map((post) =>
-        <div key={post.id}>
-          <p>ユーザーID:{post.users_id}</p>
-          <p>投稿内容：{post.content}</p>
+    <div className='grid grid-cols-3'>
+      <div className='col-span-1 ml-1 sticky top-0'>
+        <SideMenu />
+      </div>
+      <div className='col-span-1'>
+        <div className='flex flex-wrap justify-center'>
+          {posts.map((post) =>
+            <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
+          )}
         </div>
-      )}
+      </div>
+      <div className='col-span-1 flex justify-end m-4'>
+        <SideProfile />
+      </div>
     </div >
   )
 }
