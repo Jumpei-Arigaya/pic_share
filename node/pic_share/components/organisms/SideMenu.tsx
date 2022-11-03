@@ -25,7 +25,7 @@ const SideMenu = () => {
                         シェアする
                     </li>
                 </a>
-                <Link href='*'>
+                <Link href='/JumpeiArigaya'>
                     <li className="flex m-4  p-2 hover:bg-slate-200 cursor-pointer">
                         <ProfileIcon />
                         プロフィール

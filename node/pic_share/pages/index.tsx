@@ -24,7 +24,7 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-      <div className='col-span-1 flex justify-end m-4'>
+      <div className='col-span-1 flex justify-center mt-32'>
         <SideProfile />
       </div>
     </div >
