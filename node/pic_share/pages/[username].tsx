@@ -5,6 +5,7 @@ import Profile from "../components/organisms/Profile";
 import Share from "../components/organisms/Share";
 import SideMenu from "../components/organisms/SideMenu";
 import { useGetPosts } from "../hooks/useGetPosts";
+import { RecoilRoot } from "recoil";
 
 
 const UserProfile = () => {
@@ -13,14 +14,13 @@ const UserProfile = () => {
     useEffect(() => {
         getAllPostsData();
     }, [])
-    const [modalIsOpen, setIsOpen] = useState(false);
 
     return (
         <div>
-            <Share modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+            <Share />
             <div className='grid grid-cols-3'>
                 <div className='col-span-1 flex ml-1 sticky top-2'>
-                    <SideMenu modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+                    <SideMenu />
                     <div className="m-4" onClick={() => router.back()}>
                         <BackButton />
                     </div>

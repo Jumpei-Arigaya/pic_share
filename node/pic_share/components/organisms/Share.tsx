@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { usePostModal } from "../../hooks/usePostModal";
 
 type Props = {
     modalIsOpen: boolean;
@@ -8,13 +9,15 @@ type Props = {
 
 Modal.setAppElement('body')
 
-export default function App({ modalIsOpen, setIsOpen }: Props) {
-    console.log(modalIsOpen)
+export default function App() {
+
+    const { postModalState, modalOpen, modalClose } = usePostModal();
+    console.log(postModalState);
 
     return (
         <div className="App">
-            <Modal isOpen={modalIsOpen} style={modalStyle}>
-                <button onClick={() => setIsOpen(false)}>Close Modal</button>
+            <Modal style={modalStyle}>
+                <button>Close Modal</button>
                 vemwvaeopivmawueiompvwp
             </Modal>
         </div>
