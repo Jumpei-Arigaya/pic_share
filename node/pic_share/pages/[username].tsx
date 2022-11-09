@@ -10,14 +10,9 @@ import { RecoilRoot } from "recoil";
 
 const UserProfile = () => {
     const router = useRouter();
-    const { getAllPostsData, posts } = useGetPosts();
-    useEffect(() => {
-        getAllPostsData();
-    }, [])
 
     return (
         <div>
-            <Share />
             <div className='grid grid-cols-3'>
                 <div className='col-span-1 flex ml-1 sticky top-2'>
                     <SideMenu />
@@ -28,8 +23,9 @@ const UserProfile = () => {
                 <div className='col-span-1 flex justify-center mt-7'>
                     <Profile />
                 </div>
+                <Share />
             </div >
-        </div>
+        </div >
 
     );
 }

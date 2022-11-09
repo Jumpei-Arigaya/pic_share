@@ -1,43 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-modal";
 import { usePostModal } from "../../hooks/usePostModal";
-
-type Props = {
-    modalIsOpen: boolean;
-    setIsOpen: (args: boolean) => void;
-}
 
 Modal.setAppElement('body')
 
 export default function App() {
 
-    const { postModalState, modalOpen, modalClose } = usePostModal();
-    console.log(postModalState);
+    const { modalState, modalClose } = usePostModal();
 
     return (
         <div className="App">
-            <Modal style={modalStyle}>
-                <button>Close Modal</button>
-                vemwvaeopivmawueiompvwp
-            </Modal>
-        </div>
+            {modalState && (
+                <div>
+                    <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+                        <div className="bg-white px-16 py-14 rounded-md text-center">
+                            <h1 className="text-xl mb-4 font-bold text-slate-500">Do you Want Delete</h1>
+                            <button className="bg-red-500 px-4 py-2 rounded-md text-md text-white" onClick={() => modalClose()}>Cancle</button>
+                            <button className="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">Ok</button>
+                        </div>
+                    </div>
+
+                </div>
+            )}
+        </div >
     );
 }
-const modalStyle = {
-    overlay: {
-        position: "fixed",
-        top: 0,
-        left: 0,
-        backgroundColor: "rgba(0,0,0,0.85)"
-    },
-    content: {
-        position: "absolute",
-        top: "5rem",
-        left: "5rem",
-        right: "5rem",
-        bottom: "5rem",
-        backgroundColor: "paleturquoise",
-        borderRadius: "1rem",
-        padding: "1.5rem"
-    }
-};

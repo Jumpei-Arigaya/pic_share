@@ -1,14 +1,9 @@
-import { useRecoilState } from 'recoil';
-import { atom } from "recoil";
-
-export const modalState = atom({
-    key: "modalState",
-    default: false,
-})
+import { ModalContext } from './../providers/ModalProvider';
+import { useContext } from 'react';
 
 export const usePostModal = () => {
 
-    const [postModalState, setModalState] = useRecoilState(modalState);
+    const { modalState, setModalState } = useContext(ModalContext);
 
     const modalOpen = () => {
         setModalState(true);
@@ -18,5 +13,5 @@ export const usePostModal = () => {
         setModalState(false);
     }
 
-    return { postModalState, modalOpen, modalClose }
+    return { modalState, modalOpen, modalClose }
 }

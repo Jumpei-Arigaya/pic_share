@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react'
 import SideMenu from '../components/organisms/SideMenu'
 import PostList from '../components/organisms/PostList'
 import SideProfile from '../components/organisms/SideProfile'
+import Share from '../components/organisms/Share'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
@@ -13,21 +14,26 @@ const Home: NextPage = () => {
   console.log(posts)
 
   return (
-    <div className='grid grid-cols-3'>
-      <div className='col-span-1 ml-1 sticky top-0'>
-        <SideMenu />
-      </div>
-      <div className='col-span-1'>
-        <div className='flex flex-wrap justify-center'>
-          {posts.map((post) =>
-            <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
-          )}
+    <div>
+      <div className='grid grid-cols-3'>
+        <div className='col-span-1 ml-1 sticky top-0'>
+          <SideMenu />
         </div>
-      </div>
-      <div className='col-span-1 flex justify-center mt-32'>
-        <SideProfile />
-      </div>
-    </div >
+        <div className='col-span-1'>
+          <div className='flex flex-wrap justify-center'>
+            {posts.map((post) =>
+              <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
+            )}
+          </div>
+        </div>
+        <div className='col-span-1 flex justify-center mt-32'>
+          <SideProfile />
+        </div>
+        <div>
+          <Share />
+        </div>
+      </div >
+    </div>
   )
 }
 export default Home

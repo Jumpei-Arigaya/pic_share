@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ModalContext } from "../../providers/ModalProvider";
 import ProfileData from "../molecules/ProfileData";
 
 const Profile = () => {
