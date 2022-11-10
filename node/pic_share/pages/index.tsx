@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   console.log(posts)
 
   return (
-    <div>
+    <div className=''>
       <div className='grid grid-cols-3'>
         <div className='col-span-1 ml-1 sticky top-0'>
           <SideMenu />
@@ -29,10 +29,10 @@ const Home: NextPage = () => {
         <div className='col-span-1 flex justify-center mt-32'>
           <SideProfile />
         </div>
-        <div>
-          <Share />
-        </div>
       </div >
+      <div className=''>
+        <Share />
+      </div>
     </div>
   )
 }
