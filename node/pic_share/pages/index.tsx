@@ -32,7 +32,7 @@ const Home: NextPage = () => {
             )}
 
             {posts.map((post) =>
-              <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
+              <PostList key={post.id} users_id={post.users_id} content={post.content} created_at={post.created_at} post_image={post.post_image} />
             )}
           </div>
         </div>

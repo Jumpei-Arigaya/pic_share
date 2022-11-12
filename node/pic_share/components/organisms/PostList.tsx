@@ -2,7 +2,7 @@ import GoodIcon from "../atoms/icon/GoodIcon";
 import { Post } from "../../types/api/Post";
 import Date from "../atoms/Date";
 
-const PostList = ({ users_id, content, create_at }: Post) => {
+const PostList = ({ users_id, content, created_at, post_image }: Post) => {
 
     return (
         <div className="w-[450px] h-[650px] m-8 shadow-2xl bg-white">
@@ -13,15 +13,14 @@ const PostList = ({ users_id, content, create_at }: Post) => {
                     </div>
                     <div>
                         <span className="block text-indigo-500">{users_id}</span>
-
                         <span className="block text-gray-400 text-sm">
-                            <Date dateString={create_at} />
+                            {<Date dateString={created_at} />}
                         </span>
                     </div>
                 </div>
                 <div className="flex justify-center">
                     <a href="#" className="group w-[400px] h-[470px] block bg-gray-100 overflow-hidden relative mt-1">
-                        <img src="https://source.unsplash.com/random/" loading="lazy" alt="Photo by Minh Pham" className="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200" />
+                        <img src={post_image} className="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200" />
                     </a>
                 </div>
                 <div className="flex flex-col flex-1 p-4 sm:p-6">
