@@ -31,11 +31,6 @@ const login = () => {
                             <span className="bg-white text-gray-400 text-sm relative px-4">SNS連携を行う</span>
                         </div>
                         <Link href='/'>
-                            <button className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
-                                <a>ゲストアカウントでログイン</a>
-                            </button>
-                        </Link>
-                        <Link href='/'>
                             <button className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
                                 <svg className="w-5 h-5 shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M23.7449 12.27C23.7449 11.48 23.6749 10.73 23.5549 10H12.2549V14.51H18.7249C18.4349 15.99 17.5849 17.24 16.3249 18.09V21.09H20.1849C22.4449 19 23.7449 15.92 23.7449 12.27Z" fill="#4285F4" />
@@ -46,10 +41,15 @@ const login = () => {
                                 <a>Googleでログイン</a>
                             </button>
                         </Link>
+                        <Link href='/'>
+                            <button className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+                                <a>ゲストアカウントでログイン</a>
+                            </button>
+                        </Link>
                     </div>
                     <div className="flex justify-center items-center bg-slate-50 p-4">
                         <p className="text-gray-500 text-sm text-center">アカウントをお持ちでないですか？
-                            <Link href='/'>
+                            <Link href='/accounts/emailsignup'>
                                 <a className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100 ml-3">登録する</a>
                             </Link>
                         </p>
