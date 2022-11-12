@@ -1,31 +1,40 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { useGetPosts } from '../hooks/useGetPosts'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SideMenu from '../components/organisms/SideMenu'
 import PostList from '../components/organisms/PostList'
 import SideProfile from '../components/organisms/SideProfile'
+import Share from '../components/organisms/Share'
+import { usePostModal } from '../hooks/usePostModal'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
+  const { scrollability } = usePostModal();
+
   useEffect(() => {
     getAllPostsData();
   }, [])
   console.log(posts)
 
   return (
-    <div className='grid grid-cols-3'>
-      <div className='col-span-1 ml-1 sticky top-0'>
-        <SideMenu />
-      </div>
-      <div className='col-span-1'>
-        <div className='flex flex-wrap justify-center'>
-          {posts.map((post) =>
-            <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
-          )}
+    <div className={`${scrollability}`}>
+      <div className='grid grid-cols-3'>
+        <div className='col-span-1 ml-1 sticky top-0'>
+          <SideMenu />
         </div>
-      </div>
-      <div className='col-span-1 flex justify-center mt-32'>
-        <SideProfile />
+        <div className='col-span-1'>
+          <div className='flex flex-wrap justify-center'>
+            {posts.map((post) =>
+              <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
+            )}
+          </div>
+        </div>
+        <div className='col-span-1 flex justify-center mt-32'>
+          <SideProfile />
+        </div>
+      </div >
+      <div className=''>
+        <Share />
       </div>
     </div >
   )
