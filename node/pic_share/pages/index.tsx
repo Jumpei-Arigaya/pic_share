@@ -1,20 +1,23 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { useGetPosts } from '../hooks/useGetPosts'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import SideMenu from '../components/organisms/SideMenu'
 import PostList from '../components/organisms/PostList'
 import SideProfile from '../components/organisms/SideProfile'
 import Share from '../components/organisms/Share'
 import { usePostModal } from '../hooks/usePostModal'
+import Loading from '../components/organisms/Loading'
+import { LoadingContext } from '../providers/LoadingProviders'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
+  const { isLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     getAllPostsData();
   }, [])
-  console.log(posts)
+  console.log(isLoading)
 
   return (
     <div className={`${scrollability}`}>
@@ -24,6 +27,10 @@ const Home: NextPage = () => {
         </div>
         <div className='col-span-1'>
           <div className='flex flex-wrap justify-center'>
+            {isLoading && (
+              <Loading />
+            )}
+
             {posts.map((post) =>
               <PostList key={post.id} users_id={post.users_id} content={post.content} create_at={post.create_at} />
             )}

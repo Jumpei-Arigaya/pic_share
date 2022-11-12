@@ -1,6 +1,4 @@
-import { Share } from "@mui/icons-material";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
-import Profile from "../components/organisms/Profile";
 
 export type ModalContextType = {
     modalState: boolean | null,
