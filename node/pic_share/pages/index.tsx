@@ -1,20 +1,23 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { useGetPosts } from '../hooks/useGetPosts'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SideMenu from '../components/organisms/SideMenu'
 import PostList from '../components/organisms/PostList'
 import SideProfile from '../components/organisms/SideProfile'
 import Share from '../components/organisms/Share'
+import { usePostModal } from '../hooks/usePostModal'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
+  const { scrollability } = usePostModal();
+
   useEffect(() => {
     getAllPostsData();
   }, [])
   console.log(posts)
 
   return (
-    <div className=''>
+    <div className={`${scrollability}`}>
       <div className='grid grid-cols-3'>
         <div className='col-span-1 ml-1 sticky top-0'>
           <SideMenu />
@@ -33,7 +36,7 @@ const Home: NextPage = () => {
       <div className=''>
         <Share />
       </div>
-    </div>
+    </div >
   )
 }
 export default Home

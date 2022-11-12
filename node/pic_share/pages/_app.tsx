@@ -9,9 +9,10 @@ type Props = {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [modalState, setModalState] = useState<boolean | null>(false);
+  const [scrollability, setScrollability] = useState<string | null>(null);
 
   return (
-    <ModalContext.Provider value={{ modalState, setModalState }}>
+    <ModalContext.Provider value={{ modalState, setModalState, scrollability, setScrollability }}>
       <Component {...pageProps} />
     </ModalContext.Provider>
   )
