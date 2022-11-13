@@ -13,7 +13,7 @@ class Users(models.Model):
 
 
 class Posts(models.Model):
-    users_id = models.IntegerField('ユーザーID', blank=False)
+    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     content = models.TextField('投稿内容')
     post_image = models.ImageField(upload_to='images')
     created_at = models.DateTimeField('作成日', auto_now_add=True)
@@ -22,5 +22,7 @@ class Posts(models.Model):
 
 
 class Follow_users(models.Model):
-    follower_users = models.IntegerField('フォロー元ユーザー', blank=False)
-    followered_users = models.IntegerField('フォロー先ユーザー', blank=False)
+    follower_user = models.ForeignKey(
+        Users, related_name='follower', on_delete=models.CASCADE)
+    followered_user = models.ForeignKey(
+        Users, related_name='followered', on_delete=models.CASCADE)

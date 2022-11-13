@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'pic_share.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pc-db',
-        'USER': 'django',
-        'PASSWORD': 'django',
+        'NAME': 'pc-db-2',
+        'USER': 'django-2',
+        'PASSWORD': 'django-2',
         'HOST': 'db',
         'PORT': '3306',
     }
