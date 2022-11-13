@@ -3,3 +3,4 @@ djangorestframework==3.12.2
 django-mysql==3.9
 django-cors-headers==3.5.0
 PyMySQL
+Pillow==5.0.0

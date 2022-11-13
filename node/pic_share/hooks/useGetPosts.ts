@@ -21,7 +21,7 @@ export const useGetPosts = () => {
             .then(res => {
                 setPosts(res.data);
             })
-            .catch(() => alert()
+            .catch(() => console.log('データ取得に失敗しました')
             )
             .finally(() => setIsLoading(false)
             )

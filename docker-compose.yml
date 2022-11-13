@@ -8,9 +8,9 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pc-db
-      MYSQL_USER: django
-      MYSQL_PASSWORD: django
+      MYSQL_DATABASE: pc-db-2
+      MYSQL_USER: django-2
+      MYSQL_PASSWORD: django-2
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     healthcheck:

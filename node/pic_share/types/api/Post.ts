@@ -2,8 +2,8 @@ export type Post = {
     id?: number;
     users_id?: number;
     content?: string;
-    title?: string;
-    create_at?: Date;
-    update_at?: Date;
-    delete_at?: Date;
+    post_image?: string;
+    created_at?: Date;
+    updated_at?: Date;
+    deleted_at?: Date;
 }
