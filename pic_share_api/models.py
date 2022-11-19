@@ -11,6 +11,9 @@ class Users(models.Model):
     updated_at = models.DateTimeField('更新日', auto_now=True)
     deleted_at = models.DateTimeField('削除日', blank=True, null=True)
 
+    def __str__(self):
+        return self.username
+
 
 class Posts(models.Model):
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
@@ -20,9 +23,15 @@ class Posts(models.Model):
     updated_at = models.DateTimeField('更新日', auto_now=True)
     deleted_at = models.DateTimeField('削除日', blank=True, null=True)
 
+    def __str__(self):
+        return self.content
+
 
 class Follow_users(models.Model):
     follower_user = models.ForeignKey(
         Users, related_name='follower', on_delete=models.CASCADE)
     followered_user = models.ForeignKey(
         Users, related_name='followered', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.follower_user

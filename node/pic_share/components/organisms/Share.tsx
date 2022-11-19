@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { usePostModal } from "../../hooks/usePostModal";
+import { usePostModal } from "../../hooks/api/usePostModal";
 import BackButton from "../atoms/icon/BackButton";
 import InputImageFile from "../atoms/InputImageFile";
 import Post from "../molecules/Post";
@@ -28,7 +28,7 @@ export default function App() {
                             </div>
                             <div className="grid grid-cols-3 h-[600px]">
                                 <div className="col-span-2 flex justify-center items-center h-ful border-r">
-                                    <Post users_id={loginUser} create_at={dateTime} content={content} />
+                                    <Post users_id={loginUser} created_at={dateTime} content={content} />
                                 </div>
                                 <div className="col-span-1 h-full border-b">
                                     <div className="border">

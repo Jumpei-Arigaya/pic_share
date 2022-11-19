@@ -1,23 +1,30 @@
 import { GetServerSideProps, NextPage } from 'next'
-import { useGetPosts } from '../hooks/useGetPosts'
+import { useGetPosts } from '../hooks/api/useGetPosts'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import SideMenu from '../components/organisms/SideMenu'
 import PostList from '../components/organisms/PostList'
 import SideProfile from '../components/organisms/SideProfile'
 import Share from '../components/organisms/Share'
-import { usePostModal } from '../hooks/usePostModal'
+import { usePostModal } from '../hooks/api/usePostModal'
 import Loading from '../components/organisms/Loading'
 import { LoadingContext } from '../providers/LoadingProviders'
+import { useGetAllUsers } from '../hooks/api/useGetAllUsers'
+import { LoginUserContext } from '../providers/LoginuserProviders'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
+  const { id, setId } = useContext(LoginUserContext);
+  const router = useRouter();
 
   useEffect(() => {
+    if (!id) {
+      router.replace('/accounts/login')
+    }
     getAllPostsData();
   }, [])
-  console.log(isLoading)
 
   return (
     <div className={`${scrollability}`}>
