@@ -8,7 +8,7 @@ import { Post } from '../../types/api/Post';
 
 export const useGetPosts = () => {
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
-    const [posts, setPosts] = useState(<Array<Post>>[]);
+    const [posts, setPosts] = useState<Array<Post>>([]);
     const { setIsLoading } = useContext(LoadingContext);
 
     const getAllPostsData = useCallback(() => {

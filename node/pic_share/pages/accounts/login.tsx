@@ -1,17 +1,15 @@
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { useLoginAuth } from "../../hooks/useLoginAuth";
-import { LoginUserContext } from "../../providers/LoginUserProviders";
 
-const login = () => {
+const login = memo(() => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { id, setId } = useContext(LoginUserContext);
-    const { loginAuth } = useLoginAuth(email, password);
-    const onClickLoginButton = () => {
-        loginAuth();
-        console.log(id)
+    const { loginAuth } = useLoginAuth();
+
+    const onClickLogin = () => {
+        loginAuth(email, password);
     }
 
     return (
@@ -28,11 +26,9 @@ const login = () => {
                             <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">パスワード</label>
                             <input name="password" className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        <Link href='/'>
-                            <button onClick={onClickLoginButton} className="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
-                                <a>ログイン</a>
-                            </button>
-                        </Link>
+                        <button onClick={onClickLogin} className="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
+                            <a>ログイン</a>
+                        </button>
                         <div className="flex justify-center items-center relative">
                             <span className="h-px bg-gray-300 absolute inset-x-0"></span>
                             <span className="bg-white text-gray-400 text-sm relative px-4">SNS連携を行う</span>
@@ -65,6 +61,6 @@ const login = () => {
             </div>
         </div >
     );
-}
+})
 
 export default login;
