@@ -1,37 +1,22 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useEffect, useState } from 'react'
-import { ModalContext } from '../providers/ModalProvider'
-import { LoadingContext } from '../providers/LoadingProviders'
 import { Session } from 'next-auth'
-import { LoginUserContext } from '../providers/LoginUserProviders'
-import { useCheckAuth } from '../hooks/useCheckAuth'
-
-type Props = {
-  children: React.ReactNode,
-}
+import { LoginUserProvider } from '../providers/LoginUserProviders'
+import { ModalProvider } from '../providers/ModalProvider'
+import { LoadingProvider } from '../providers/LoadingProviders'
 
 export default function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
-  const [modalState, setModalState] = useState<boolean | null>(false);
-  const [scrollability, setScrollability] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean | null>(false);
-  const [id, setId] = useState<number | null>(null);
-  const [localStrageId, setLocalStrageId] = useState<number | null>(null)
-  const { checkAuth } = useCheckAuth();
-
-  useEffect(() => {
-    checkAuth()
-  }, [])
 
   return (
-    <LoginUserContext.Provider value={{ id, setId, localStrageId, setLocalStrageId }}>
-      <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-        <ModalContext.Provider value={{ modalState, setModalState, scrollability, setScrollability }}>
+    <LoginUserProvider>
+      <LoadingProvider>
+        <ModalProvider>
           <Component {...pageProps} />
-        </ModalContext.Provider>
-      </LoadingContext.Provider>
-    </LoginUserContext.Provider>
+        </ModalProvider>
+      </LoadingProvider>
+    </LoginUserProvider>
   )
+
 }
 
 

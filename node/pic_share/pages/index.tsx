@@ -8,6 +8,7 @@ import SideMenu from '../components/organisms/SideMenu'
 import SideProfile from '../components/organisms/SideProfile'
 import { useGetPosts } from '../hooks/api/useGetPosts'
 import { usePostModal } from '../hooks/api/usePostModal'
+import { useCheckAuth } from '../hooks/useCheckAuth'
 import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
 
@@ -15,8 +16,15 @@ const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
-  const { id, localStrageId } = useContext(LoginUserContext);
+  const { id } = useContext(LoginUserContext);
   const router = useRouter();
+  const { checkAuth } = useCheckAuth();
+
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+  console.log(`contextIDは ${id}`)
 
   useEffect(() => {
     getAllPostsData();
@@ -24,7 +32,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {(id || localStrageId) && (
+      {id && (
         <div className={`${scrollability}`}>
           <div className='grid grid-cols-3'>
             <div className='col-span-1 ml-1 sticky top-0'>
