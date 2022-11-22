@@ -4,7 +4,7 @@ import BackButton from "../components/atoms/icon/BackButton";
 import Profile from "../components/organisms/Profile";
 import Share from "../components/organisms/Share";
 import SideMenu from "../components/organisms/SideMenu";
-import { useGetPosts } from "../hooks/useGetPosts";
+import { useGetPosts } from "../hooks/api/useGetPosts";
 import { RecoilRoot } from "recoil";
 
 

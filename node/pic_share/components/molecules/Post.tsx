@@ -1,7 +1,7 @@
 import { Post } from "../../types/api/Post";
 import GoodIcon from "../atoms/icon/GoodIcon";
 
-const Post = ({ users_id, create_at, content }: Post) => {
+const Post = ({ users_id, created_at, content }: Post) => {
     return (
         <div className="w-[350px] h-[550px] shadow-2xl bg-white">
             <div className="flex flex-col overflow-hidden">

@@ -1,16 +1,16 @@
-import React, { useContext, useState } from "react";
-import { usePostModal } from "../../hooks/usePostModal";
+import { useContext, useState } from "react";
+import { usePostModal } from "../../hooks/api/usePostModal";
+import { LoginUserContext } from "../../providers/LoginUserProviders";
 import BackButton from "../atoms/icon/BackButton";
 import InputImageFile from "../atoms/InputImageFile";
 import Post from "../molecules/Post";
 import ProfileData from "../molecules/ProfileData";
-import PostList from "./PostList";
 
 export default function App() {
 
     const { modalState, modalClose } = usePostModal();
     const [content, setContent] = useState('');
-    const loginUser = 1234;
+    const { id } = useContext(LoginUserContext);
     const dateTime = new Date();
 
     return (
@@ -28,7 +28,7 @@ export default function App() {
                             </div>
                             <div className="grid grid-cols-3 h-[600px]">
                                 <div className="col-span-2 flex justify-center items-center h-ful border-r">
-                                    <Post users_id={loginUser} create_at={dateTime} content={content} />
+                                    <Post users_id={id} created_at={dateTime} content={content} />
                                 </div>
                                 <div className="col-span-1 h-full border-b">
                                     <div className="border">

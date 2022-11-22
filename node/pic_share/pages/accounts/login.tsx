@@ -1,11 +1,27 @@
 import Link from "next/link";
-import { useState } from "react";
+import router from "next/router";
+import { memo, useContext, useState } from "react";
+import { useLoginAuth } from "../../hooks/useLoginAuth";
+import { LoginUserContext } from "../../providers/LoginUserProviders";
 
-
-const login = () => {
+const login = memo(() => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { loginAuth } = useLoginAuth();
+    const { setId } = useContext(LoginUserContext);
+    const GUEST_ACCOUNT_ID: number = Number(process.env.NEXT_PUBLIC_GUEST_ACCOUNT_ID);
+
+    const onClickLogin = () => {
+        loginAuth(email, password);
+    }
+
+    const onClickGuestLogin = () => {
+        setId(GUEST_ACCOUNT_ID);
+        const guestAccountStringfy = JSON.stringify(GUEST_ACCOUNT_ID);
+        window.localStorage.setItem("loginUser", guestAccountStringfy);
+        router.push('/')
+    }
 
     return (
         <div className="py-6 sm:py-8 lg:py-12">
@@ -21,11 +37,9 @@ const login = () => {
                             <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">パスワード</label>
                             <input name="password" className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        <Link href='/'>
-                            <button className="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
-                                <a>ログイン</a>
-                            </button>
-                        </Link>
+                        <button onClick={onClickLogin} className="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
+                            <a>ログイン</a>
+                        </button>
                         <div className="flex justify-center items-center relative">
                             <span className="h-px bg-gray-300 absolute inset-x-0"></span>
                             <span className="bg-white text-gray-400 text-sm relative px-4">SNS連携を行う</span>
@@ -41,11 +55,9 @@ const login = () => {
                                 <a>Googleでログイン</a>
                             </button>
                         </Link>
-                        <Link href='/'>
-                            <button className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
-                                <a>ゲストアカウントでログイン</a>
-                            </button>
-                        </Link>
+                        <button onClick={onClickGuestLogin} className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+                            <a>ゲストアカウントでログイン</a>
+                        </button>
                     </div>
                     <div className="flex justify-center items-center bg-slate-50 p-4">
                         <p className="text-gray-500 text-sm text-center">アカウントをお持ちでないですか？
@@ -56,8 +68,8 @@ const login = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
-}
+})
 
 export default login;

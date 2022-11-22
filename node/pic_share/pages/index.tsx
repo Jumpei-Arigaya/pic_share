@@ -1,49 +1,63 @@
-import { GetServerSideProps, NextPage } from 'next'
-import { useGetPosts } from '../hooks/useGetPosts'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import SideMenu from '../components/organisms/SideMenu'
-import PostList from '../components/organisms/PostList'
-import SideProfile from '../components/organisms/SideProfile'
-import Share from '../components/organisms/Share'
-import { usePostModal } from '../hooks/usePostModal'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useContext, useEffect } from 'react'
 import Loading from '../components/organisms/Loading'
+import PostList from '../components/organisms/PostList'
+import Share from '../components/organisms/Share'
+import SideMenu from '../components/organisms/SideMenu'
+import SideProfile from '../components/organisms/SideProfile'
+import { useGetPosts } from '../hooks/api/useGetPosts'
+import { usePostModal } from '../hooks/api/usePostModal'
+import { useCheckAuth } from '../hooks/useCheckAuth'
 import { LoadingContext } from '../providers/LoadingProviders'
+import { LoginUserContext } from '../providers/LoginUserProviders'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
+  const { id } = useContext(LoginUserContext);
+  const router = useRouter();
+  const { checkAuth } = useCheckAuth();
+
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+  console.log(`contextIDは ${id}`)
 
   useEffect(() => {
     getAllPostsData();
   }, [])
-  console.log(isLoading)
 
   return (
-    <div className={`${scrollability}`}>
-      <div className='grid grid-cols-3'>
-        <div className='col-span-1 ml-1 sticky top-0'>
-          <SideMenu />
-        </div>
-        <div className='col-span-1'>
-          <div className='flex flex-wrap justify-center'>
-            {isLoading && (
-              <Loading />
-            )}
-
-            {posts.map((post) =>
-              <PostList key={post.id} users_id={post.users_id} content={post.content} created_at={post.created_at} post_image={post.post_image} />
-            )}
+    <>
+      {id && (
+        <div className={`${scrollability}`}>
+          <div className='grid grid-cols-3'>
+            <div className='col-span-1 ml-1 sticky top-0'>
+              <SideMenu />
+            </div>
+            <div className='col-span-1'>
+              <div className='flex flex-wrap justify-center'>
+                {isLoading && (
+                  <Loading />
+                )}
+                {posts.map((post) =>
+                  <PostList key={post.id} users_id={post.users_id} content={post.content} created_at={post.created_at} post_image={post.post_image} />
+                )}
+              </div>
+            </div>
+            <div className='col-span-1 flex justify-center mt-32'>
+              <SideProfile />
+            </div>
+          </div >
+          <div className=''>
+            <Share />
           </div>
-        </div>
-        <div className='col-span-1 flex justify-center mt-32'>
-          <SideProfile />
-        </div>
-      </div >
-      <div className=''>
-        <Share />
-      </div>
-    </div >
+        </div >
+      )}
+    </>
   )
 }
 export default Home

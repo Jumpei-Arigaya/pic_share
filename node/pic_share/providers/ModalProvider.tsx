@@ -7,6 +7,19 @@ export type ModalContextType = {
     setScrollability: Dispatch<SetStateAction<string | null>>,
 }
 
-export const ModalContext = createContext<ModalContextType>({} as ModalContextType);
+type Props = {
+    children: React.ReactNode;
+}
 
+export const ModalContext = createContext<ModalContextType>({} as ModalContextType);
+export const ModalProvider = ({ children }: Props) => {
+    const [modalState, setModalState] = useState<boolean | null>(false);
+    const [scrollability, setScrollability] = useState<string | null>(null);
+
+    return (
+        <ModalContext.Provider value={{ modalState, setModalState, scrollability, setScrollability }}>
+            {children}
+        </ModalContext.Provider>
+    )
+}
 

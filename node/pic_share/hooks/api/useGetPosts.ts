@@ -1,14 +1,14 @@
-import { LoadingContext } from './../providers/LoadingProviders';
+import { LoadingContext } from '../../providers/LoadingProviders';
 import { useCallback, useMemo, useState, useContext } from 'react';
 import fetch from "node-fetch";
 import axios from 'axios';
-import { Post } from '../types/api/Post';
+import { Post } from '../../types/api/Post';
 
 // Django APIサーバーURL
 
 export const useGetPosts = () => {
-    const SERVERURL: string = "http://127.0.0.1:8000/";
-    const [posts, setPosts] = useState(<Array<Post>>[]);
+    const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
+    const [posts, setPosts] = useState<Array<Post>>([]);
     const { setIsLoading } = useContext(LoadingContext);
 
     const getAllPostsData = useCallback(() => {
@@ -17,7 +17,7 @@ export const useGetPosts = () => {
         // return posts;
 
         setIsLoading(true);
-        axios.get<Array<Post>>(`${SERVERURL}api/posts/`)
+        axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
             .then(res => {
                 setPosts(res.data);
             })
