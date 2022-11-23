@@ -1,9 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
 import { usePostModal } from "../../hooks/api/usePostModal";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
+import { Users } from "../../types/api/Users";
 import BackButton from "../atoms/icon/BackButton";
 import InputImageFile from "../atoms/InputImageFile";
-import Post from "../molecules/Post";
+import PostPreview from "../molecules/PostPreview";
 import ProfileData from "../molecules/ProfileData";
 
 export default function App() {
@@ -12,6 +14,13 @@ export default function App() {
     const [content, setContent] = useState('');
     const { id } = useContext(LoginUserContext);
     const dateTime = new Date();
+    const { getAllUsers, users } = useGetAllUsers();
+
+    useEffect(() => {
+        getAllUsers()
+    }, [])
+
+    const loginUser: Users | undefined = users.find(user => user.id === id)
 
     return (
         <div className="App">
@@ -28,7 +37,7 @@ export default function App() {
                             </div>
                             <div className="grid grid-cols-3 h-[600px]">
                                 <div className="col-span-2 flex justify-center items-center h-ful border-r">
-                                    <Post users_id={id} created_at={dateTime} content={content} />
+                                    <PostPreview profile_image={loginUser?.profile_image} user_name={loginUser?.username} content={content} />
                                 </div>
                                 <div className="col-span-1 h-full border-b">
                                     <div className="border">

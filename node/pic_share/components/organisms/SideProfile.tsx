@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Users } from "../../types/api/Users";
 import ProfileData from "../molecules/ProfileData";
 
 const SideProfile = () => {

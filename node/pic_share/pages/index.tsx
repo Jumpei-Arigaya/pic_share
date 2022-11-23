@@ -1,16 +1,18 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Loading from '../components/organisms/Loading'
 import PostList from '../components/organisms/PostList'
 import Share from '../components/organisms/Share'
 import SideMenu from '../components/organisms/SideMenu'
 import SideProfile from '../components/organisms/SideProfile'
+import { useGetAllUsers } from '../hooks/api/useGetAllUsers'
 import { useGetPosts } from '../hooks/api/useGetPosts'
 import { usePostModal } from '../hooks/api/usePostModal'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
+import { Users } from '../types/api/Users'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
@@ -19,15 +21,12 @@ const Home: NextPage = () => {
   const { id } = useContext(LoginUserContext);
   const router = useRouter();
   const { checkAuth } = useCheckAuth();
-
-  useEffect(() => {
-    checkAuth()
-  }, [])
-
-  console.log(`contextIDは ${id}`)
+  const [loginUserInformation, setLoginUserInformation] = useState<Users>()
+  const { getAllUsers, users } = useGetAllUsers();
 
   useEffect(() => {
     getAllPostsData();
+    checkAuth()
   }, [])
 
   return (
@@ -49,7 +48,7 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className='col-span-1 flex justify-center mt-32'>
-              <SideProfile />
+              <SideProfile users={users} />
             </div>
           </div >
           <div className=''>

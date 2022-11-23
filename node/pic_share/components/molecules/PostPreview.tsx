@@ -1,16 +1,17 @@
 import { Post } from "../../types/api/Post";
+import { PostPreview } from "../../types/PostPreview";
 import GoodIcon from "../atoms/icon/GoodIcon";
 
-const Post = ({ users_id, created_at, content }: Post) => {
+const PostPreview = ({ profile_image, user_name, content }: PostPreview) => {
     return (
         <div className="w-[350px] h-[550px] shadow-2xl bg-white">
             <div className="flex flex-col overflow-hidden">
                 <div className="flex items-center gap-2 m-4">
                     <div className="w-10 h-10 shrink-0 bg-gray-100 rounded-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1611898872015-0571a9e38375?auto=format&q=75&fit=crop&w=64" loading="lazy" alt="Photo by Brock Wegner" className="w-full h-full object-cover object-center" />
+                        <img src={profile_image} loading="lazy" alt="Photo by Brock Wegner" className="w-full h-full object-cover object-center" />
                     </div>
                     <div>
-                        <span className="block text-indigo-500">{users_id}</span>
+                        <span className="block text-indigo-500">{user_name}</span>
                     </div>
                 </div>
                 <div className="flex justify-center">
@@ -29,4 +30,4 @@ const Post = ({ users_id, created_at, content }: Post) => {
     );
 }
 
-export default Post;
+export default PostPreview;
