@@ -9,7 +9,9 @@ export const useGetAllUsers = () => {
 
     const getAllUsers = useCallback(() => {
         axios.get<Array<Users>>(`${SERVER_URL}api/users`)
-            .then(res => setUsers(res.data))
+            .then(res => {
+                if (res.data) { setUsers(res.data) }
+            })
             .catch(() => console.log('データ取得に失敗しました'))
     }, [])
     return { users, getAllUsers }

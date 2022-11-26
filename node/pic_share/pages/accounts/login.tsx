@@ -1,6 +1,6 @@
 import Link from "next/link";
 import router from "next/router";
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { useLoginAuth } from "../../hooks/useLoginAuth";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
 
@@ -9,18 +9,16 @@ const login = memo(() => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { loginAuth } = useLoginAuth();
-    const { setId } = useContext(LoginUserContext);
-    const GUEST_ACCOUNT_ID: number = Number(process.env.NEXT_PUBLIC_GUEST_ACCOUNT_ID);
+    const { setLoginUser } = useContext(LoginUserContext);
+    const GUEST_ACCOUNT_MAILADDRESS: string = process.env.NEXT_PUBLIC_GUEST_ACCOUNT_MAILADDRESS!;
+    const GUEST_ACCOUNT_PASSWORD: string = process.env.NEXT_PUBLIC_GUEST_PASSWORD!;
 
     const onClickLogin = () => {
         loginAuth(email, password);
     }
 
     const onClickGuestLogin = () => {
-        setId(GUEST_ACCOUNT_ID);
-        const guestAccountStringfy = JSON.stringify(GUEST_ACCOUNT_ID);
-        window.localStorage.setItem("loginUser", guestAccountStringfy);
-        router.push('/')
+        loginAuth(GUEST_ACCOUNT_MAILADDRESS!, GUEST_ACCOUNT_PASSWORD!)
     }
 
     return (

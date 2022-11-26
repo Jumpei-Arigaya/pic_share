@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
 import { usePostModal } from "../../hooks/api/usePostModal";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
-import { Users } from "../../types/api/Users";
 import BackButton from "../atoms/icon/BackButton";
 import InputImageFile from "../atoms/InputImageFile";
 import PostPreview from "../molecules/PostPreview";
@@ -12,15 +11,13 @@ export default function App() {
 
     const { modalState, modalClose } = usePostModal();
     const [content, setContent] = useState('');
-    const { id } = useContext(LoginUserContext);
+    const { loginUser } = useContext(LoginUserContext);
     const dateTime = new Date();
     const { getAllUsers, users } = useGetAllUsers();
 
     useEffect(() => {
         getAllUsers()
     }, [])
-
-    const loginUser: Users | undefined = users.find(user => user.id === id)
 
     return (
         <div className="App">
@@ -42,7 +39,7 @@ export default function App() {
                                 <div className="col-span-1 h-full border-b">
                                     <div className="border">
                                         <div className="m-3">
-                                            <ProfileData />
+                                            <ProfileData profileUsername={loginUser?.username} profileUserImage={loginUser?.profile_image} />
                                         </div>
                                         <div className="mt-5 mx-3">
                                             <InputImageFile />

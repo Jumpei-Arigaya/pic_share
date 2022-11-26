@@ -4,12 +4,25 @@ import BackButton from "../components/atoms/icon/BackButton";
 import Profile from "../components/organisms/Profile";
 import Share from "../components/organisms/Share";
 import SideMenu from "../components/organisms/SideMenu";
-import { useGetPosts } from "../hooks/api/useGetPosts";
-import { RecoilRoot } from "recoil";
-
+import { useGetAllUsers } from "../hooks/api/useGetAllUsers";
+import { useCheckAuth } from "../hooks/useCheckAuth";
+import { Users } from "../types/api/Users";
 
 const UserProfile = () => {
     const router = useRouter();
+    const URL_PATH = router.query.username;
+    const { getAllUsers, users } = useGetAllUsers();
+    const { checkAuth } = useCheckAuth();
+
+    useEffect(() => {
+        getAllUsers()
+    }, [])
+
+    useEffect(() => {
+        checkAuth(users)
+    }, [users])
+
+    const profileUser: Users | undefined = users.find(user => user.username === URL_PATH)
 
     return (
         <div>
@@ -21,7 +34,7 @@ const UserProfile = () => {
                     </div>
                 </div>
                 <div className='col-span-1 flex justify-center mt-7'>
-                    <Profile />
+                    <Profile profileUserId={profileUser?.id} profileUsername={profileUser?.username} profileUserImage={profileUser?.profile_image} />
                 </div>
                 <Share />
             </div >
