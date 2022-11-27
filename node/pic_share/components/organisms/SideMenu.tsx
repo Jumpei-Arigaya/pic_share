@@ -12,9 +12,6 @@ import ProfileIcon from "../atoms/icon/ProfileIcon";
 const SideMenu = () => {
     const { modalState, modalOpen, modalClose } = usePostModal();
     const { loginUser, setLoginUser } = useContext(LoginUserContext);
-    const { setProfileUser } = useContext(ProfileUserContext);
-
-    const onClickProfile = () => setProfileUser(loginUser)
 
     return (
         <div className="h-screen bg-white p-1 w-64 min-w-min border-r sticky top-0">
@@ -37,7 +34,7 @@ const SideMenu = () => {
                     </li>
                 </a>
                 <Link href={`${loginUser?.username}`}>
-                    <li className="flex m-4  p-2 hover:bg-slate-200 cursor-pointer" onClick={onClickProfile}>
+                    <li className="flex m-4  p-2 hover:bg-slate-200 cursor-pointer">
                         <ProfileIcon />
                         プロフィール
                     </li>

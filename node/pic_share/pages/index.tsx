@@ -12,6 +12,7 @@ import { usePostModal } from '../hooks/api/usePostModal'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
+import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
   const { loginUser } = useContext(LoginUserContext);
   const { checkAuth } = useCheckAuth();
   const { getAllUsers, users } = useGetAllUsers();
+  const { setProfileUser } = useContext(ProfileUserContext);
 
   useEffect(() => {
     getAllPostsData();
@@ -28,6 +30,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     checkAuth(users)
+    setProfileUser(loginUser)
   }, [users])
 
   return (

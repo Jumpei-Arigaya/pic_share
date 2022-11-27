@@ -34,4 +34,4 @@ class Follow_users(models.Model):
         Users, related_name='followered', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.follower_user
+        return "{} : {}".format(self.follower_user, self.followered_user)

@@ -5,8 +5,10 @@ import Profile from "../components/organisms/Profile";
 import Share from "../components/organisms/Share";
 import SideMenu from "../components/organisms/SideMenu";
 import { useGetAllUsers } from "../hooks/api/useGetAllUsers";
+import { useGetIsFollow } from "../hooks/api/useGetIsFollow";
 import { useCheckAuth } from "../hooks/useCheckAuth";
 import { LoginUserContext } from "../providers/LoginUserProviders";
+import { ProfileContext } from "../providers/ProfileProviders";
 import { ProfileUserContext } from "../providers/ProfileUserProviders";
 
 const UserProfile = () => {
@@ -14,6 +16,10 @@ const UserProfile = () => {
     const URL_PATH = router.query.username;
     const { getAllUsers, users } = useGetAllUsers();
     const { checkAuth } = useCheckAuth();
+    const { profileUser, setProfileUser } = useContext(ProfileUserContext);
+    const { getIsFollow, getFollowList } = useGetIsFollow();
+    const { loginUser } = useContext(LoginUserContext);
+    const { followUsers, setFollowUsersCount, followUsersCount } = useContext(ProfileContext);
 
     useEffect(() => {
         getAllUsers()
@@ -21,6 +27,9 @@ const UserProfile = () => {
 
     useEffect(() => {
         checkAuth(users)
+        setProfileUser(users.find(res => res.username === URL_PATH)!)
+        getIsFollow(loginUser!, profileUser!);
+        getFollowList(profileUser!)
     }, [users])
 
     return (
