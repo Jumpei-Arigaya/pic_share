@@ -22,9 +22,9 @@ const ProfileData = () => {
             </div>
             <div className="ml-8">
                 <span className="block text-indigo-500">{profileUser?.username}</span>
-                <div className="mt-2">
-                    <p className="block text-gray-400 text-sm">{`フォロー  ${followUsersCount}`}</p>
-                    <p className="block text-gray-400 text-sm">{`フォロワー ${followerUsersCount}`}</p>
+                <div className="mt-2 text-gray-400 text-sm">
+                    <p>{`フォロー  ${followUsersCount}`}</p>
+                    <p>{`フォロワー ${followerUsersCount}`}</p>
                 </div>
             </div>
         </div >

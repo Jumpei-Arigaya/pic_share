@@ -1,12 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
 import { useGetIsFollow } from "../../hooks/api/useGetIsFollow";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
-import { ProfileContext } from "../../providers/ProfileProviders";
 import { ProfileUserContext } from "../../providers/ProfileUserProviders";
-import FollowUserIcon from "../atoms/icon/FollowUserIcon";
-import UnFollowUserIcon from "../atoms/icon/UnFollowUserIcon";
+import FollowButtons from "../molecules/FollowButtons";
 import ProfileData from "../molecules/ProfileData";
 
 type Props = {
@@ -17,16 +15,14 @@ type Props = {
 
 const Profile = ({ profileUserId, profileUsername, profileUserImage }: Props) => {
     const { getAllUsers, users } = useGetAllUsers();
-    const { getIsFollow, getFollowList } = useGetIsFollow();
+    const { getIsFollow } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
     const { profileUser, setProfileUser } = useContext(ProfileUserContext);
-    const { isFollow, setIsFollow } = useContext(ProfileContext);
     const { checkAuth } = useCheckAuth();
 
     useEffect(() => {
         getAllUsers();
         getIsFollow(loginUser!, profileUser!);
-        getFollowList(profileUser!);
     }, [])
 
     useEffect(() => {
@@ -38,14 +34,8 @@ const Profile = ({ profileUserId, profileUsername, profileUserImage }: Props) =>
             <div>
                 <div className="m-5 flex justify-between">
                     <ProfileData />
-                    {isFollow ? (
-                        <div onClick={() => setIsFollow(!isFollow)}>
-                            <UnFollowUserIcon />
-                        </div>
-                    ) : (
-                        <div onClick={() => setIsFollow(!isFollow)}>
-                            <FollowUserIcon />
-                        </div>
+                    {loginUser?.id !== profileUser?.id && (
+                        <FollowButtons />
                     )}
                 </div>
                 <hr className="m-1" />

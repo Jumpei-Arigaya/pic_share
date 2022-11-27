@@ -16,7 +16,7 @@ const UserProfile = () => {
     const { getAllUsers, users } = useGetAllUsers();
     const { checkAuth } = useCheckAuth();
     const { profileUser, setProfileUser } = useContext(ProfileUserContext);
-    const { getIsFollow, getFollowList } = useGetIsFollow();
+    const { getIsFollow } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
 
     useEffect(() => {
@@ -25,12 +25,9 @@ const UserProfile = () => {
 
     useEffect(() => {
         checkAuth(users)
-        setProfileUser(users.find(res => res.username === URL_PATH)!)
         getIsFollow(loginUser!, profileUser!);
-        getFollowList(profileUser!)
+        setProfileUser(users.find(res => res.username === URL_PATH)!)
     }, [users])
-
-    console.log(profileUser)
 
     return (
         <div>
