@@ -9,8 +9,6 @@ export const useGetIsFollow = () => {
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
     const { isFollow, setIsFollow } = useContext(ProfileContext);
     const { followUsers, setFollowUsers } = useContext(ProfileContext);
-    const { followerUsers, setFollowerUsers } = useContext(ProfileContext);
-    const { followUsersCount, setFollowUsersCount } = useContext(ProfileContext);
 
     const getIsFollow = (loginUser: Users, profileUser: Users) => {
         axios.get<Array<FollowUsers>>(`${SERVER_URL}api/follow_users`)
@@ -24,13 +22,9 @@ export const useGetIsFollow = () => {
     }
 
     const getFollowList = (profileUser: Users) => {
-        axios.get<Array<FollowUsers>>(`${SERVER_URL}api/follow_users`)
+        axios.get<Array<FollowUsers>>(`${SERVER_URL}api/users`)
             .then(res => {
                 if (res.data) {
-                    const a = (res.data.filter((dt) => dt.follower_user === 1) as FollowUsers)
-                    setFollowUsers(a)
-                    // setFollowerUsers(res.data.filter((dt) => dt.followered_user === 1))
-                    console.log(followUsers)
                 }
             })
             .catch(() => console.log('データ取得に失敗しました'))

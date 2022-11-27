@@ -8,7 +8,6 @@ import { useGetAllUsers } from "../hooks/api/useGetAllUsers";
 import { useGetIsFollow } from "../hooks/api/useGetIsFollow";
 import { useCheckAuth } from "../hooks/useCheckAuth";
 import { LoginUserContext } from "../providers/LoginUserProviders";
-import { ProfileContext } from "../providers/ProfileProviders";
 import { ProfileUserContext } from "../providers/ProfileUserProviders";
 
 const UserProfile = () => {
@@ -19,7 +18,6 @@ const UserProfile = () => {
     const { profileUser, setProfileUser } = useContext(ProfileUserContext);
     const { getIsFollow, getFollowList } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
-    const { followUsers, setFollowUsersCount, followUsersCount } = useContext(ProfileContext);
 
     useEffect(() => {
         getAllUsers()
@@ -31,6 +29,8 @@ const UserProfile = () => {
         getIsFollow(loginUser!, profileUser!);
         getFollowList(profileUser!)
     }, [users])
+
+    console.log(profileUser)
 
     return (
         <div>

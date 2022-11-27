@@ -8,4 +8,14 @@ export type Users = {
     created_at: string;
     updated_at: string;
     deleted_at?: string;
+    follower?: {
+        id: number;
+        follower_user?: number;
+        followered_user?: number;
+    }
+    followered?: {
+        id: number;
+        follower_user?: number;
+        followered_user?: number;
+    }
 }
