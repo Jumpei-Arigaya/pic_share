@@ -5,17 +5,15 @@ from pic_share_api.serializer import Follower_usersSerializer, PostsSerializer, 
 from rest_framework import viewsets
 
 
-class PostsView(generics.ListAPIView):
+class PostsViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     serializer_class = PostsSerializer
 
-
-class PostsDetailView(generics.RetrieveAPIView):
-    queryset = Posts.objects.all()
-    serializer_class = PostsSerializer
+    def perform_create(self, serializer, **kwarhgs):
+        serializer.save()
 
 
-class UsersView(generics.ListAPIView):
+class UsersViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
 
@@ -29,3 +27,6 @@ class UserFollowingViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = Follower_usersSerializer
     queryset = Follow_users.objects.all()
+
+    def perform_create(self, serializer, **kwarhgs):
+        serializer.save()

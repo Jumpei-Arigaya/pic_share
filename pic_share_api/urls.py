@@ -1,11 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('follow_users', views.UserFollowingViewSet)
+router.register('posts', views.PostsViewSet)
+router.register('users', views.UsersViewSet)
 
 urlpatterns = [
-    path('posts/', views.PostsView.as_view(), name='posts'),
-    path('posts/<str:pk>/', views.PostsDetailView.as_view(), name='posts_detail'),
-    path('users/', views.UsersView.as_view(), name='users'),
-    path('users/<str:pk>/', views.UsersDetailView.as_view(), name='users_detail'),
-    path('follow_users/',
-         views.UserFollowingViewSet.as_view({'get': 'list'}), name='follow'),
+    path('', include(router.urls)),
 ]

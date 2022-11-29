@@ -33,5 +33,9 @@ class Follow_users(models.Model):
     followered_user = models.ForeignKey(
         Users, related_name='followered', on_delete=models.CASCADE)
 
+    class Meta:
+
+        unique_together = (("follower_user", "followered_user"))
+
     def __str__(self):
         return "{} : {}".format(self.follower_user, self.followered_user)
