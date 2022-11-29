@@ -19,6 +19,21 @@ export const useGetIsFollow = () => {
             .catch(() => console.log('データ取得に失敗しました'))
     }
 
-    return { getIsFollow }
+    const userFollow = (followerUser: number, followeredUser: number) => {
+        axios.post(`${SERVER_URL}api/follow_users/`, {
+            follower_user: followerUser,
+            followered_user: followeredUser
+        })
+            .then(res => console.log(res.data))
+            .catch(() => console.log('postエラー'))
+    }
+
+    const userUnFollow = (followId: number) => {
+        axios.delete(`${SERVER_URL}api/follow_users/${followId}`, {
+        })
+            .then(res => console.log(res.data))
+            .catch(() => console.log('deleteエラー'))
+    }
+    return { getIsFollow, userFollow, userUnFollow }
 
 }

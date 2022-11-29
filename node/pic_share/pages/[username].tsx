@@ -16,7 +16,7 @@ const UserProfile = () => {
     const { getAllUsers, users } = useGetAllUsers();
     const { checkAuth } = useCheckAuth();
     const { profileUser, setProfileUser } = useContext(ProfileUserContext);
-    const { getIsFollow } = useGetIsFollow();
+    const { getIsFollow, userUnFollow } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
 
     useEffect(() => {
