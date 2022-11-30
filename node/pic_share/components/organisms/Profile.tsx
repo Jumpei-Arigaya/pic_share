@@ -15,18 +15,18 @@ type Props = {
 
 const Profile = ({ profileUserId, profileUsername, profileUserImage }: Props) => {
     const { getAllUsers, users } = useGetAllUsers();
-    const { getIsFollow } = useGetIsFollow();
+    const { getIsFollow, isFollow } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
     const { profileUser, setProfileUser } = useContext(ProfileUserContext);
     const { checkAuth } = useCheckAuth();
 
     useEffect(() => {
         getAllUsers();
-        getIsFollow(loginUser!, profileUser!);
     }, [])
 
     useEffect(() => {
         checkAuth(users)
+        getIsFollow(loginUser?.id!, profileUser?.id!);
     }, [users])
 
     return (
