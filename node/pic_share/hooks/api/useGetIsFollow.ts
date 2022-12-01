@@ -1,15 +1,13 @@
 import { LoadingContext } from './../../providers/LoadingProviders';
 import { FollowUsers } from './../../types/api/FollowUsers';
-import { ProfileContext, ProfileUserContext } from '../../providers/ProfileProviders';
-import { useContext, useState } from 'react';
+import { ProfileContext } from '../../providers/ProfileProviders';
+import { useContext, useState, useCallback } from 'react';
 import axios from "axios"
-import { Users } from '../../types/api/Users';
 
 export const useGetIsFollow = () => {
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
     const { isFollow, setIsFollow } = useContext(ProfileContext);
     const [followList, setFollowList] = useState<Array<FollowUsers>>();
-    const [deleteUser, setDeleteUser] = useState<FollowUsers>();
     const { isLoading, setIsLoading } = useContext(LoadingContext);
 
     const getIsFollow = (loginUserId: number, profileUserId: number) => {
@@ -24,32 +22,35 @@ export const useGetIsFollow = () => {
             .catch(() => console.log('データ取得に失敗しました'))
     }
 
-    const userFollow = (followerUser: number, followeredUser: number) => {
+    const userFollow = useCallback((followerUser: number, followeredUser: number) => {
         setIsLoading(true)
         axios.post(`${SERVER_URL}api/follow_users/`, {
             follower_user: followerUser,
             followered_user: followeredUser
         })
             .then(res => {
-                console.log(res.data)
                 setIsFollow(true)
             })
             .catch(() => console.log('postエラー'))
             .finally(() => setIsLoading(false))
-    }
+    }, [])
 
-    const userUnFollow = async (followerUser: number, followeredUser: number) => {
-        getIsFollow(followerUser, followeredUser)
-        await setDeleteUser(followList?.find(list => list.follower_user === followerUser && list.followered_user === followeredUser))
-        await console.log(deleteUser)
-        await axios.delete(`${SERVER_URL}api/follow_users/${deleteUser?.id}`, {
+    const userUnFollow = useCallback(async (followerUser: number, followeredUser: number) => {
+        setIsLoading(true);
+        let deleteId: number | undefined;
+        await axios.get<Array<FollowUsers>>(`${SERVER_URL}api/follow_users`)
+            .then(res => {
+                deleteId = (res.data.find(list => list.follower_user === followerUser && list.followered_user === followeredUser))?.id
+            })
+            .catch(() => console.log('データ取得に失敗しました'))
+        await axios.delete(`${SERVER_URL}api/follow_users/${deleteId}`, {
         })
             .then(res => {
-                console.log(res.data)
                 setIsFollow(false)
             })
             .catch(() => console.log('deleteエラー'))
-    }
+            .finally(() => setIsLoading(false))
+    }, [])
     return { isFollow, getIsFollow, userFollow, userUnFollow }
 
 }

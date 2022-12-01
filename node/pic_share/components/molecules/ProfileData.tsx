@@ -1,19 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../../providers/ProfileProviders";
 import { ProfileUserContext } from "../../providers/ProfileUserProviders";
-import { FollowUsers } from "../../types/api/FollowUsers";
 
 const ProfileData = () => {
     const { profileUser } = useContext(ProfileUserContext);
     const [followUsersCount, setFollowUsersCount] = useState<number>();
     const [followerUsersCount, setFollowerUsersCount] = useState<number>();
+    const { isFollow, setIsFollow } = useContext(ProfileContext);
 
     useEffect(() => {
         if (profileUser) {
             setFollowUsersCount(Object.keys(profileUser.follower!).length)
             setFollowerUsersCount(Object.keys(profileUser.followered!).length)
         }
-    }, [profileUser])
+    }, [isFollow, profileUser])
 
     return (
         <div className="flex">

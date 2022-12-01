@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { useGetIsFollow } from "../../hooks/api/useGetIsFollow";
-import { LoadingContext } from "../../providers/LoadingProviders";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
 import { ProfileContext } from "../../providers/ProfileProviders";
 import { ProfileUserContext } from "../../providers/ProfileUserProviders";
@@ -12,7 +11,6 @@ const FollowButtons = () => {
     const { userFollow, userUnFollow } = useGetIsFollow();
     const { loginUser } = useContext(LoginUserContext);
     const { profileUser } = useContext(ProfileUserContext);
-    const { isLoading } = useContext(LoadingContext);
 
     const onClickFollowUserIcon = () => {
         userFollow(loginUser?.id!, profileUser?.id!)
@@ -21,7 +19,7 @@ const FollowButtons = () => {
     const onClickUnFollowUserIcon = () => {
         userUnFollow(loginUser?.id!, profileUser?.id!);
     }
-    console.log(isFollow)
+
     return (
         <div>
             {isFollow ? (

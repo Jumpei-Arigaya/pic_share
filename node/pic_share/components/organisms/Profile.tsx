@@ -1,7 +1,5 @@
-import { useContext, useEffect } from "react";
-import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
-import { useGetIsFollow } from "../../hooks/api/useGetIsFollow";
-import { useCheckAuth } from "../../hooks/useCheckAuth";
+import { useContext } from "react";
+import { LoadingContext } from "../../providers/LoadingProviders";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
 import { ProfileUserContext } from "../../providers/ProfileUserProviders";
 import FollowButtons from "../molecules/FollowButtons";
@@ -13,28 +11,17 @@ type Props = {
     profileUserImage?: string;
 }
 
-const Profile = ({ profileUserId, profileUsername, profileUserImage }: Props) => {
-    const { getAllUsers, users } = useGetAllUsers();
-    const { getIsFollow, isFollow } = useGetIsFollow();
+const Profile = () => {
     const { loginUser } = useContext(LoginUserContext);
-    const { profileUser, setProfileUser } = useContext(ProfileUserContext);
-    const { checkAuth } = useCheckAuth();
-
-    useEffect(() => {
-        getAllUsers();
-    }, [])
-
-    useEffect(() => {
-        checkAuth(users)
-        getIsFollow(loginUser?.id!, profileUser?.id!);
-    }, [users])
+    const { profileUser } = useContext(ProfileUserContext);
+    const { isLoading } = useContext(LoadingContext);
 
     return (
         <div className="shadow-lg p-1 w-96 h-96 bg-white">
             <div>
                 <div className="m-5 flex justify-between">
                     <ProfileData />
-                    {loginUser?.id !== profileUser?.id && (
+                    {((loginUser?.id !== profileUser?.id) && !isLoading) && (
                         <FollowButtons />
                     )}
                 </div>
