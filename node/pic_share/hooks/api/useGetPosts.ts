@@ -19,7 +19,9 @@ export const useGetPosts = () => {
         setIsLoading(true);
         axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
             .then(res => {
-                setPosts(res.data);
+                if (res.data) {
+                    setPosts(res.data);
+                }
             })
             .catch(() => console.log('データ取得に失敗しました')
             )

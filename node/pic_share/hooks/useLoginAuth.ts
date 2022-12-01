@@ -6,9 +6,8 @@ import { Users } from '../types/api/Users';
 import axios from 'axios';
 
 export const useLoginAuth = () => {
-    const { id, setId } = useContext(LoginUserContext);
+    const { loginUser, setLoginUser } = useContext(LoginUserContext);
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
-    const [users, setUsers] = useState<Array<Users>>([]);
     const router = useRouter();
 
     const loginAuth = useCallback((email: string, password: string) => {
@@ -16,11 +15,11 @@ export const useLoginAuth = () => {
             .then(res => {
                 if (res.data) {
                     const usersData = res.data
-                    const loginUser = usersData.find(user => user.email === email && user.password === password)
-                    if (loginUser?.id) {
-                        setId(loginUser.id)
+                    const matchLoginUser = usersData.find(user => user.email === email && user.password === password)
+                    if (matchLoginUser) {
+                        setLoginUser(matchLoginUser)
                         localStorage.clear()
-                        const loginUserStringfy = JSON.stringify(loginUser.id);
+                        const loginUserStringfy = JSON.stringify(matchLoginUser.id);
                         window.localStorage.setItem("loginUser", loginUserStringfy)
                         router.push('/')
                     } else {
@@ -30,5 +29,5 @@ export const useLoginAuth = () => {
             })
             .catch(() => alert('ログイン失敗'))
     }, [])
-    return { loginAuth, id }
+    return { loginAuth }
 }

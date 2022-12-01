@@ -1,38 +1,32 @@
-import { useContext, useEffect } from "react";
-import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
-import { useCheckAuth } from "../../hooks/useCheckAuth";
+import { useContext } from "react";
+import { LoadingContext } from "../../providers/LoadingProviders";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
-import { Users } from "../../types/api/Users";
-import FollowUserIcon from "../atoms/icon/FollowUserIcon";
-import UnFollowUserIcon from "../atoms/icon/UnFollowUserIcon";
+import { ProfileUserContext } from "../../providers/ProfileUserProviders";
+import FollowButtons from "../molecules/FollowButtons";
 import ProfileData from "../molecules/ProfileData";
 
+type Props = {
+    profileUserId?: number;
+    profileUsername?: string;
+    profileUserImage?: string;
+}
+
 const Profile = () => {
-    const { getAllUsers, users } = useGetAllUsers();
-    const { checkAuth } = useCheckAuth();
-    const { id } = useContext(LoginUserContext)
-
-    useEffect(() => {
-        checkAuth();
-        getAllUsers();
-    }, [])
-
-    const loginUser: Users | undefined = users.find(user => user.id === id)
-    const isFollow = true;
+    const { loginUser } = useContext(LoginUserContext);
+    const { profileUser } = useContext(ProfileUserContext);
+    const { isLoading } = useContext(LoadingContext);
 
     return (
         <div className="shadow-lg p-1 w-96 h-96 bg-white">
             <div>
                 <div className="m-5 flex justify-between">
                     <ProfileData />
-                    {isFollow ? (
-                        <FollowUserIcon />
-                    ) : (
-                        <UnFollowUserIcon />
+                    {((loginUser?.id !== profileUser?.id) && !isLoading) && (
+                        <FollowButtons />
                     )}
                 </div>
                 <hr className="m-1" />
-                <p className="m-5">{loginUser?.introduction}</p>
+                <p className="m-5">{profileUser?.introduction}</p>
             </div>
         </div>
     );

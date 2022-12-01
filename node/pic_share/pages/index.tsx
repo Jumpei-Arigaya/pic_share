@@ -12,26 +12,30 @@ import { usePostModal } from '../hooks/api/usePostModal'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
-import { Users } from '../types/api/Users'
+import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
 const Home: NextPage = () => {
   const { getAllPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
-  const { id } = useContext(LoginUserContext);
-  const router = useRouter();
+  const { loginUser } = useContext(LoginUserContext);
   const { checkAuth } = useCheckAuth();
-  const [loginUserInformation, setLoginUserInformation] = useState<Users>()
   const { getAllUsers, users } = useGetAllUsers();
+  const { setProfileUser } = useContext(ProfileUserContext);
 
   useEffect(() => {
     getAllPostsData();
-    checkAuth()
+    getAllUsers();
   }, [])
+
+  useEffect(() => {
+    checkAuth(users)
+    setProfileUser(loginUser)
+  }, [users])
 
   return (
     <>
-      {id && (
+      {loginUser && (
         <div className={`${scrollability}`}>
           <div className='grid grid-cols-3'>
             <div className='col-span-1 ml-1 sticky top-0'>
@@ -48,7 +52,7 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className='col-span-1 flex justify-center mt-32'>
-              <SideProfile users={users} />
+              <SideProfile />
             </div>
           </div >
           <div className=''>
