@@ -36,7 +36,7 @@ class PostUserSerializer(serializers.ModelSerializer):
 
 
 class PostsSerializer(serializers.ModelSerializer):
-    users_id = PostUserSerializer(read_only=True)
+    users = PostUserSerializer(read_only=True)
 
     class Meta:
         model = Posts
