@@ -18,11 +18,6 @@ class UsersViewSet(viewsets.ModelViewSet):
     serializer_class = UsersSerializer
 
 
-class UsersDetailView(generics.RetrieveAPIView):
-    queryset = Users.objects.all()
-    serializer_class = UsersSerializer
-
-
 class UserFollowingViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = Follower_usersSerializer
