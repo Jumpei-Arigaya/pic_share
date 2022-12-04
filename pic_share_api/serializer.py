@@ -25,7 +25,7 @@ class PostUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Users
-        fields = ("username", 'profile_image',
+        fields = ("id", "username", 'profile_image',
                   'follower', 'followered')
 
     def get_follower(self, obj):

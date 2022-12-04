@@ -15,7 +15,7 @@ import { LoginUserContext } from '../providers/LoginUserProviders'
 import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
 const Home: NextPage = () => {
-  const { getAllPostsData, posts } = useGetPosts();
+  const { getFollowPostsData, posts, followPostsData } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
   const { loginUser } = useContext(LoginUserContext);
@@ -24,13 +24,15 @@ const Home: NextPage = () => {
   const { setProfileUser } = useContext(ProfileUserContext);
 
   useEffect(() => {
-    getAllPostsData();
     getAllUsers();
   }, [])
 
   useEffect(() => {
     checkAuth(users)
-    setProfileUser(loginUser)
+    if (loginUser) {
+      getFollowPostsData(loginUser.id)
+      setProfileUser(loginUser)
+    }
   }, [users])
 
   return (
@@ -46,8 +48,8 @@ const Home: NextPage = () => {
                 {isLoading && (
                   <Loading />
                 )}
-                {posts.map((post) =>
-                  <PostList key={post.id} users_id={post.users_id} content={post.content} created_at={post.created_at} post_image={post.post_image} />
+                {followPostsData.map((post) =>
+                  <PostList key={post.id} content={post.content} created_at={post.created_at} post_image={post.post_image} users={post.users} />
                 )}
               </div>
             </div>
