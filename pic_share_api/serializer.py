@@ -25,7 +25,8 @@ class PostUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Users
-        fields = ("username", 'profile_image', 'follower', 'followered')
+        fields = ("username", 'profile_image',
+                  'follower', 'followered')
 
     def get_follower(self, obj):
         return Follower_usersSerializer(obj.follower.all(), many=True).data
@@ -35,7 +36,7 @@ class PostUserSerializer(serializers.ModelSerializer):
 
 
 class PostsSerializer(serializers.ModelSerializer):
-    users = PostUserSerializer(read_only=True)
+    users_id = PostUserSerializer(read_only=True)
 
     class Meta:
         model = Posts
