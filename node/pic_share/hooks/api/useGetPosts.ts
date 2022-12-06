@@ -1,8 +1,9 @@
+import { Post } from './../../types/api/Post';
 import { LoadingContext } from '../../providers/LoadingProviders';
 import { useCallback, useMemo, useState, useContext } from 'react';
-import fetch from "node-fetch";
 import axios from 'axios';
-import { Post } from '../../types/api/Post';
+import { FollowUsers } from '../../types/api/FollowUsers';
+import { ProfileContext } from '../../providers/ProfileProviders';
 
 // Django APIサーバーURL
 
@@ -11,6 +12,8 @@ export const useGetPosts = () => {
     const [posts, setPosts] = useState<Array<Post>>([]);
     const [followPostsData, setFollowPostsData] = useState<Array<Post>>([]);
     const { setIsLoading } = useContext(LoadingContext);
+    let followList: Array<FollowUsers> = []
+    let followUserPosts: Array<Post> = []
 
     const getAllPostsData = useCallback(() => {
         // const res = await fetch(`${SERVERURL}api/posts/`);
@@ -30,15 +33,30 @@ export const useGetPosts = () => {
             )
     }, [])
 
-    const getFollowPostsData = useCallback((loginUserId: number) => {
+    const getFollowPostsData = useCallback(async (loginUserId: number) => {
 
         setIsLoading(true);
-        axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
+        await axios.get<Array<FollowUsers>>(`${SERVER_URL}api/follow_users`)
             .then(res => {
-                if (res.data) {
-                    setFollowPostsData(res.data.filter((list => list.users?.followered)))
-
-                }
+                followList = res.data
+            })
+            .catch(() => console.log('データ取得に失敗しました'))
+        await axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
+            .then(res => {
+                res.data.map(post => {
+                    for (let i = 0; i < followList.length; i++) {
+                        if (followList[i].follower_user == loginUserId && followList[i].followered_user == post.users?.id) {
+                            console.log('フォロー', followList[i].follower_user)
+                            console.log('ログインユーザ', loginUserId)
+                            console.log('フォローユーザー', followList[i].followered_user)
+                            console.log('投稿', post.users?.id)
+                            console.log('-------------------------------')
+                            followUserPosts.push(post)
+                            setPosts(followUserPosts)
+                            break;
+                        }
+                    }
+                })
             })
             .catch(() => console.log('データ取得に失敗しました')
             )
@@ -46,6 +64,6 @@ export const useGetPosts = () => {
             )
     }, [])
 
-    return { getAllPostsData, getFollowPostsData, posts, followPostsData }
+    return { getAllPostsData, getFollowPostsData, followUserPosts, posts }
 }
 
