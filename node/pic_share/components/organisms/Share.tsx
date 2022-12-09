@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
 import { usePostModal } from "../../hooks/api/usePostModal";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
@@ -7,7 +7,7 @@ import InputImageFile from "../atoms/InputImageFile";
 import PostPreview from "../molecules/PostPreview";
 import ProfileData from "../molecules/ProfileData";
 
-export default function App() {
+export default memo(function App() {
 
     const { modalState, modalClose } = usePostModal();
     const [content, setContent] = useState('');
@@ -57,4 +57,4 @@ export default function App() {
             )}
         </div >
     );
-}
+})

@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useState } from 'react'
 import Loading from '../components/organisms/Loading'
 import PostList from '../components/organisms/PostList'
 import Share from '../components/organisms/Share'
@@ -14,8 +14,8 @@ import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
 import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
-const Home: NextPage = () => {
-  const { getAllPostsData, posts } = useGetPosts();
+const Home: NextPage = memo(() => {
+  const { getFollowPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
   const { loginUser } = useContext(LoginUserContext);
@@ -24,14 +24,22 @@ const Home: NextPage = () => {
   const { setProfileUser } = useContext(ProfileUserContext);
 
   useEffect(() => {
-    getAllPostsData();
     getAllUsers();
   }, [])
 
+
   useEffect(() => {
     checkAuth(users)
-    setProfileUser(loginUser)
+    if (loginUser) {
+      setProfileUser(loginUser)
+
+    }
   }, [users])
+
+  useEffect(() => {
+    getFollowPostsData(1);
+  }, [])
+  console.log(posts)
 
   return (
     <>
@@ -47,7 +55,7 @@ const Home: NextPage = () => {
                   <Loading />
                 )}
                 {posts.map((post) =>
-                  <PostList key={post.id} users_id={post.users_id} content={post.content} created_at={post.created_at} post_image={post.post_image} />
+                  <PostList key={post.id} content={post.content} created_at={post.created_at} post_image={post.post_image} users={post.users} />
                 )}
               </div>
             </div>
@@ -62,7 +70,7 @@ const Home: NextPage = () => {
       )}
     </>
   )
-}
+})
 export default Home
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {

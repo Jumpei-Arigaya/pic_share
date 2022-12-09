@@ -1,18 +1,19 @@
 import GoodIcon from "../atoms/icon/GoodIcon";
 import { Post } from "../../types/api/Post";
 import Date from "../atoms/Date";
+import { memo } from "react";
 
-const PostList = ({ users_id, content, created_at, post_image }: Post) => {
+const PostList = memo(({ users, content, created_at, post_image, }: Post) => {
 
     return (
         <div className="w-[450px] h-[650px] m-8 shadow-2xl bg-white">
             <div className="flex flex-col overflow-hidden">
                 <div className="flex items-center gap-2 m-4">
                     <div className="w-10 h-10 shrink-0 bg-gray-100 rounded-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1611898872015-0571a9e38375?auto=format&q=75&fit=crop&w=64" loading="lazy" alt="Photo by Brock Wegner" className="w-full h-full object-cover object-center" />
+                        <img src={users?.profile_image} loading="lazy" alt="Photo by Brock Wegner" className="w-full h-full object-cover object-center" />
                     </div>
                     <div>
-                        <span className="block text-indigo-500">{users_id}</span>
+                        <span className="block text-indigo-500">{users?.username}</span>
                         <span className="block text-gray-400 text-sm">
                             {<Date dateString={created_at} />}
                         </span>
@@ -32,6 +33,6 @@ const PostList = ({ users_id, content, created_at, post_image }: Post) => {
             </div>
         </div >
     );
-}
+})
 
 export default PostList;

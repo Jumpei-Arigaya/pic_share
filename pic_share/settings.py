@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import environ
 import os
 from pathlib import Path
 
@@ -78,14 +79,18 @@ WSGI_APPLICATION = 'pic_share.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+env = environ.Env()
+env.read_env('.env')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pc-db-2',
-        'USER': 'django-2',
-        'PASSWORD': 'django-2',
-        'HOST': 'db',
-        'PORT': '3306',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 

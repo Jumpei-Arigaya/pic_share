@@ -17,7 +17,8 @@ class Users(models.Model):
 
 
 class Posts(models.Model):
-    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    users = models.ForeignKey(
+        Users, on_delete=models.CASCADE, related_name="users")
     content = models.TextField('投稿内容')
     post_image = models.ImageField(upload_to='images')
     created_at = models.DateTimeField('作成日', auto_now_add=True)
