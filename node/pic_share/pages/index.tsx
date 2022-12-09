@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useState } from 'react'
 import Loading from '../components/organisms/Loading'
 import PostList from '../components/organisms/PostList'
 import Share from '../components/organisms/Share'
@@ -14,8 +14,8 @@ import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
 import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
-const Home: NextPage = () => {
-  const { getAllPostsData, getFollowPostsData, followUserPosts, posts } = useGetPosts();
+const Home: NextPage = memo(() => {
+  const { getFollowPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
   const { loginUser } = useContext(LoginUserContext);
@@ -27,14 +27,19 @@ const Home: NextPage = () => {
     getAllUsers();
   }, [])
 
+
   useEffect(() => {
     checkAuth(users)
     if (loginUser) {
-      getFollowPostsData(loginUser.id);
       setProfileUser(loginUser)
+
     }
   }, [users])
-  console.log('data', posts)
+
+  useEffect(() => {
+    getFollowPostsData(1);
+  }, [])
+  console.log(posts)
 
   return (
     <>
@@ -49,7 +54,7 @@ const Home: NextPage = () => {
                 {isLoading && (
                   <Loading />
                 )}
-                {followUserPosts.map((post) =>
+                {posts.map((post) =>
                   <PostList key={post.id} content={post.content} created_at={post.created_at} post_image={post.post_image} users={post.users} />
                 )}
               </div>
@@ -65,7 +70,7 @@ const Home: NextPage = () => {
       )}
     </>
   )
-}
+})
 export default Home
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {

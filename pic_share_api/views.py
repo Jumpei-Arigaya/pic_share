@@ -6,7 +6,7 @@ from rest_framework import viewsets
 
 
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset = Posts.objects.all()
+    queryset = Posts.objects.order_by('created_at').reverse()
     serializer_class = PostsSerializer
 
     def perform_create(self, serializer, **kwarhgs):

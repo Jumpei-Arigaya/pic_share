@@ -10,52 +10,22 @@ import { ProfileContext } from '../../providers/ProfileProviders';
 export const useGetPosts = () => {
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
     const [posts, setPosts] = useState<Array<Post>>([]);
-    const [followPostsData, setFollowPostsData] = useState<Array<Post>>([]);
     const { setIsLoading } = useContext(LoadingContext);
-    let followList: Array<FollowUsers> = []
-    let followUserPosts: Array<Post> = []
 
-    const getAllPostsData = useCallback(() => {
-        // const res = await fetch(`${SERVERURL}api/posts/`);
-        // const posts = await res.json();
-        // return posts;
+    const getFollowPostsData = useCallback((loginUserId: number) => {
 
         setIsLoading(true);
         axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
             .then(res => {
-                if (res.data) {
-                    setPosts(res.data);
-                }
-            })
-            .catch(() => console.log('データ取得に失敗しました')
-            )
-            .finally(() => setIsLoading(false)
-            )
-    }, [])
-
-    const getFollowPostsData = useCallback(async (loginUserId: number) => {
-
-        setIsLoading(true);
-        await axios.get<Array<FollowUsers>>(`${SERVER_URL}api/follow_users`)
-            .then(res => {
-                followList = res.data
-            })
-            .catch(() => console.log('データ取得に失敗しました'))
-        await axios.get<Array<Post>>(`${SERVER_URL}api/posts/`)
-            .then(res => {
                 res.data.map(post => {
-                    for (let i = 0; i < followList.length; i++) {
-                        if (followList[i].follower_user == loginUserId && followList[i].followered_user == post.users?.id) {
-                            console.log('フォロー', followList[i].follower_user)
-                            console.log('ログインユーザ', loginUserId)
-                            console.log('フォローユーザー', followList[i].followered_user)
-                            console.log('投稿', post.users?.id)
-                            console.log('-------------------------------')
-                            followUserPosts.push(post)
-                            setPosts(followUserPosts)
-                            break;
-                        }
-                    }
+                    const { users } = post
+                    // for (let i = 0; i < (post.users?.followered)!.length; i++) {
+                    //     if (users?.followered![i].follower_user == loginUserId) {
+                    //         setPosts(prev => [...prev, { ...post }])
+                    //         break;
+                    //     }
+                    // }
+                    setPosts(res.data)
                 })
             })
             .catch(() => console.log('データ取得に失敗しました')
@@ -64,6 +34,6 @@ export const useGetPosts = () => {
             )
     }, [])
 
-    return { getAllPostsData, getFollowPostsData, followUserPosts, posts }
+    return { getFollowPostsData, posts }
 }
 

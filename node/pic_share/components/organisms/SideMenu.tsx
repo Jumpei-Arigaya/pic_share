@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
 import { useGetAllUsers } from "../../hooks/api/useGetAllUsers";
 import { usePostModal } from "../../hooks/api/usePostModal";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
@@ -9,7 +9,7 @@ import HomeIcon from "../atoms/icon/HomeIcon";
 import LogoutIcon from "../atoms/icon/LogoutIcon";
 import ProfileIcon from "../atoms/icon/ProfileIcon";
 
-const SideMenu = () => {
+const SideMenu = memo(() => {
     const { modalState, modalOpen, modalClose } = usePostModal();
     const { loginUser, setLoginUser } = useContext(LoginUserContext);
 
@@ -48,6 +48,6 @@ const SideMenu = () => {
             </ul >
         </div >
     );
-}
+})
 
 export default SideMenu;

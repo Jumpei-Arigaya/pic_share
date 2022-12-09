@@ -9,14 +9,14 @@ export type Post = {
         id?: number;
         username?: string;
         profile_image?: string;
-        follower?: {
+        follower?: [{
             id?: number;
             follower_user?: number;
             followered_user?: number;
-        }
-        followered?: {
+        }]
+        followered?: [{
             follower_user?: number;
             followered_user?: number;
-        }
+        }]
     }
 }
