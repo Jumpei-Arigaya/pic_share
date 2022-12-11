@@ -37,7 +37,7 @@ const SideMenu = () => {
                         プロフィール
                     </li>
                 </Link>
-                <Link href='/accounts/Login'>
+                <Link href='/accounts/login'>
                     <a onClick={() => setLoginUser(null)}><li className="flex m-4 p-2 hover:bg-slate-200 cursor-pointer">
                         <LogoutIcon />
                         ログアウト

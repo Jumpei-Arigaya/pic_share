@@ -16,7 +16,7 @@ export const useCheckAuth = () => {
             if (defaultAuthInfo) {
                 setLoginUser(matchLoginUser!)
             } else {
-                router.replace('/accounts/Login')
+                router.replace('/accounts/login')
             }
         }
     }, [])
