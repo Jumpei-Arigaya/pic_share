@@ -1,5 +1,4 @@
 import Link from "next/link";
-import router from "next/router";
 import { memo, useContext, useEffect, useState } from "react";
 import { useLoginAuth } from "../../hooks/useLoginAuth";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
