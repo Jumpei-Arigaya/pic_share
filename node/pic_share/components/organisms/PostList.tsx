@@ -1,9 +1,8 @@
 import GoodIcon from "../atoms/icon/GoodIcon";
 import { Post } from "../../types/api/Post";
 import Date from "../atoms/Date";
-import { memo } from "react";
 
-const PostList = memo(({ users, content, created_at, post_image, }: Post) => {
+const PostList = ({ users, content, created_at, post_image, }: Post) => {
 
     return (
         <div className="w-[450px] h-[650px] m-8 shadow-2xl bg-white">
@@ -33,6 +32,6 @@ const PostList = memo(({ users, content, created_at, post_image, }: Post) => {
             </div>
         </div >
     );
-})
+}
 
 export default PostList;

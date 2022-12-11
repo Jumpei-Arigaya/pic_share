@@ -1,9 +1,9 @@
-import { memo, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
 import { ProfileUserContext } from "../../providers/ProfileUserProviders";
 import ProfileData from "../molecules/ProfileData";
 
-const SideProfile = memo(() => {
+const SideProfile = () => {
     const { loginUser } = useContext(LoginUserContext);
     const { setProfileUser } = useContext(ProfileUserContext);
 
@@ -16,6 +16,6 @@ const SideProfile = memo(() => {
             <ProfileData />
         </div >
     );
-})
+}
 
 export default SideProfile;

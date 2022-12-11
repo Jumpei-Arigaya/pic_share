@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const emailsignup = () => {
+const Emailsignup = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -54,4 +54,4 @@ const emailsignup = () => {
     );
 }
 
-export default emailsignup;
+export default Emailsignup;
