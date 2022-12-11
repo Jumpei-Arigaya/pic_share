@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { memo, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import Loading from '../components/organisms/Loading'
 import PostList from '../components/organisms/PostList'
 import Share from '../components/organisms/Share'
@@ -14,7 +13,7 @@ import { LoadingContext } from '../providers/LoadingProviders'
 import { LoginUserContext } from '../providers/LoginUserProviders'
 import { ProfileUserContext } from '../providers/ProfileUserProviders'
 
-const Home: NextPage = memo(() => {
+const Home: NextPage = () => {
   const { getFollowPostsData, posts } = useGetPosts();
   const { scrollability } = usePostModal();
   const { isLoading } = useContext(LoadingContext);
@@ -70,7 +69,7 @@ const Home: NextPage = memo(() => {
       )}
     </>
   )
-})
+}
 export default Home
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {

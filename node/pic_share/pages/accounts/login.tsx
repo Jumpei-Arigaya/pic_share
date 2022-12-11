@@ -1,10 +1,9 @@
 import Link from "next/link";
-import router from "next/router";
-import { memo, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useLoginAuth } from "../../hooks/useLoginAuth";
 import { LoginUserContext } from "../../providers/LoginUserProviders";
 
-const login = memo(() => {
+const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -59,7 +58,7 @@ const login = memo(() => {
                     </div>
                     <div className="flex justify-center items-center bg-slate-50 p-4">
                         <p className="text-gray-500 text-sm text-center">アカウントをお持ちでないですか？
-                            <Link href='/accounts/emailsignup'>
+                            <Link href='/accounts/Emailsignup'>
                                 <a className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100 ml-3">登録する</a>
                             </Link>
                         </p>
@@ -68,6 +67,6 @@ const login = memo(() => {
             </div>
         </div >
     );
-})
+}
 
-export default login;
+export default Login;
